@@ -4,9 +4,17 @@ import com.fulfilment.application.monolith.warehouses.domain.models.Location;
 import com.fulfilment.application.monolith.warehouses.domain.ports.LocationResolver;
 import java.util.ArrayList;
 import java.util.List;
+import org.jboss.logging.Logger;
 
+/**
+ * Reference data gateway for warehouse locations.
+ * 
+ * Provides access to predefined geographical locations used in the fulfillment system.
+ * Currently backed by in-memory static data; can be extended to load from external sources.
+ */
 public class LocationGateway implements LocationResolver {
 
+  private static final Logger LOGGER = Logger.getLogger(LocationGateway.class.getName());
   private static final List<Location> locations = new ArrayList<>();
 
   static {
@@ -20,9 +28,25 @@ public class LocationGateway implements LocationResolver {
     locations.add(new Location("VETSBY-001", 1, 90));
   }
 
+  /**
+   * Resolves a location by its unique identifier.
+   * 
+   * Validates that the identifier is not null or empty before searching.
+   * Returns null if the identifier is invalid or location is not found.
+   * 
+   * @param identifier the location identifier (e.g., "AMSTERDAM-001")
+   * @return the Location object if found; null if identifier is invalid or not found
+   */
   @Override
   public Location resolveByIdentifier(String identifier) {
-    // TODO implement this method
-    throw new UnsupportedOperationException("Unimplemented method 'resolveByIdentifier'");
+    if (identifier == null || identifier.isBlank()) {
+      LOGGER.error("Location identifier cannot be null or empty");
+      return null;
+    }
+
+    return locations.stream()
+        .filter(location -> location.identification.equals(identifier))
+        .findFirst()
+        .orElse(null);
   }
 }

@@ -17,6 +17,12 @@ public class LegacyStoreManagerGateway {
     writeToFile(store);
   }
 
+  public void deleteStoreOnLegacySystem(Store entity) {
+    // just to emulate as this would send this to a legacy system, let's write a temp file with the
+    // TODO: implement delete from file
+    // deleteFromFile(entity);
+  }
+
   private void writeToFile(Store store) {
     try {
       // Step 1: Create a temporary file

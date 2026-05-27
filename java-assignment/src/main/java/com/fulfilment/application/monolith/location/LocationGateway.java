@@ -2,6 +2,7 @@ package com.fulfilment.application.monolith.location;
 
 import com.fulfilment.application.monolith.warehouses.domain.models.Location;
 import com.fulfilment.application.monolith.warehouses.domain.ports.LocationResolver;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.logging.Logger;
@@ -12,6 +13,7 @@ import org.jboss.logging.Logger;
  * Provides access to predefined geographical locations used in the fulfillment system.
  * Currently backed by in-memory static data; can be extended to load from external sources.
  */
+@ApplicationScoped
 public class LocationGateway implements LocationResolver {
 
   private static final Logger LOGGER = Logger.getLogger(LocationGateway.class.getName());
